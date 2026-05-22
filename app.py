@@ -531,7 +531,7 @@ def eliminar_foto_general(id):
 ##Acivar ESTO AL HACER EL DEPLOY 
 
 with app.app_context():
-db.create_all()
+    db.create_all()
 
   #  if __name__ == '__main__':
    #     with app.app_context():
