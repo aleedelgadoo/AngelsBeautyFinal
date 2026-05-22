@@ -5,6 +5,7 @@
         <div class="col-md-4 card p-4 shadow-sm bg-white border">
             <h2 class="text-center text-uppercase mb-4 fw-light font-serif">Admin Login</h2>
             <form method="POST">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <div class="mb-3">
                     <label class="form-label small text-uppercase text-muted">Usuario</label>
                     <input type="text" name="username" class="form-control" required>
