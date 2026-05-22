@@ -526,22 +526,5 @@ def eliminar_foto_general(id):
 # INICIO
 # ==========================================
  
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-        
-        # Leemos del archivo .env. 
-        # Si no pusiste nada en el .env, estas variables serán None
-        user = os.environ.get('ADMIN_USER')
-        pwd = os.environ.get('ADMIN_PASSWORD')
-        
-        if user and pwd:
-            if not Admin.query.filter_by(username=user).first():
-                hashed_pw = generate_password_hash(pwd, method='pbkdf2:sha256')
-                db.session.add(Admin(username=user, password=hashed_pw))
-                db.session.commit()
-                print(f"✅ Usuario '{user}' creado correctamente.")
-        else:
-            print("⚠️ ERROR: No configuraste ADMIN_USER o ADMIN_PASSWORD en el archivo .env")
-        
-app.run(debug=False, use_reloader=False)
+with app.app_context():
+    db.create_all()
