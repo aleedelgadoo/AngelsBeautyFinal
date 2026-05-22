@@ -1,0 +1,411 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-uppercase border-bottom pb-3 mb-5">Panel de Control</h1>
+
+    <div class="card p-4 mb-5 shadow-sm bg-white border-primary" style="border-width: 2px;">
+        <h2 class="h4 text-uppercase mb-3 text-primary">Identidad del Sitio & Configuración Global</h2>
+        <form action="{{ url_for('actualizar_configuracion_global') }}" method="POST" enctype="multipart/form-data">
+           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="small text-uppercase fw-bold mb-1">Título de la Página / Marca</label>
+                    <input type="text" name="titulo_sitio" class="form-control" value="{{ global_config.titulo_sitio if global_config else 'TIARA BEAUTY' }}">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="small text-uppercase fw-bold mb-1">Link de Turnos (Book Appointment)</label>
+                    <input type="url" name="link_turno" class="form-control" value="{{ global_config.link_turno if global_config else '#' }}">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="small text-uppercase fw-bold mb-1">Logotipo Actual / Nuevo</label>
+                    <input type="file" name="logo_sitio" class="form-control mb-2">
+                    {% if global_config and global_config.logo and global_config.logo != "" %}
+                        <div class="p-2 border rounded d-inline-block bg-light">
+                            <img src="{{ global_config.logo }}" style="max-height: 40px;">
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="small text-uppercase fw-bold mb-1">Imagen de Sección "Sobre Mí"</label>
+                    <input type="file" name="foto_sobre_mi" class="form-control mb-2">
+                    {% if global_config and global_config.imagen_sobre_mi and global_config.imagen_sobre_mi != 'default_about.jpg' %}
+                        <img src="{{ global_config.imagen_sobre_mi }}" class="img-thumbnail" style="max-height: 60px;">
+                    {% endif %}
+                </div>
+                
+                <div class="col-md-12 mb-3 border-top pt-3 mt-2">
+                    <label class="small text-uppercase fw-bold mb-2 text-primary d-block">Nombres de las Secciones de la Web</label>
+                    <div class="row bg-light p-3 rounded border g-2">
+                        <div class="col-md-2 col-6">
+                            <label class="small text-muted mb-1">Sección Inicio</label>
+                            <input type="text" name="sec_home" class="form-control form-control-sm" value="{{ global_config.sec_home }}">
+                        </div>
+                        <div class="col-md-2 col-6">
+                            <label class="small text-muted mb-1">Sección Sobre Mí</label>
+                            <input type="text" name="sec_about" class="form-control form-control-sm" value="{{ global_config.sec_about }}">
+                        </div>
+                        <div class="col-md-2 col-6">
+                            <label class="small text-muted mb-1">Sección Servicios</label>
+                            <input type="text" name="sec_servicios" class="form-control form-control-sm" value="{{ global_config.sec_servicios }}">
+                        </div>
+                        <div class="col-md-2 col-6">
+                            <label class="small text-muted mb-1">Sección Cursos</label>
+                            <input type="text" name="sec_cursos" class="form-control form-control-sm" value="{{ global_config.sec_cursos }}">
+                        </div>
+                        <div class="col-md-2 col-6">
+                            <label class="small text-muted mb-1">Sección Testimonios</label>
+                            <input type="text" name="sec_testimonios" class="form-control form-control-sm" value="{{ global_config.sec_testimonios }}">
+                        </div>
+                        <div class="col-md-2 col-6">
+                            <label class="small text-muted mb-1">Sección FAQ</label>
+                            <input type="text" name="sec_faq" class="form-control form-control-sm" value="{{ global_config.sec_faq }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mb-3 border-top pt-3 mt-2">
+                    <label class="small text-uppercase fw-bold mb-2 text-info d-block">Enlaces de Redes Sociales (Footer)</label>
+                    <div class="row bg-light p-3 rounded border g-3">
+                        <div class="col-md-4">
+                            <label class="small fw-bold text-muted mb-1">🟢 Enlace de WhatsApp</label>
+                            <input type="url" name="link_whatsapp" class="form-control form-control-sm" value="{{ global_config.link_whatsapp }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="small fw-bold text-muted mb-1">📸 Enlace de Instagram</label>
+                            <input type="url" name="link_instagram" class="form-control form-control-sm" value="{{ global_config.link_instagram }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="small fw-bold text-muted mb-1">🎵 Enlace de TikTok</label>
+                            <input type="url" name="link_tiktok" class="form-control form-control-sm" value="{{ global_config.link_tiktok }}">
+                        </div>
+                    </div>
+                </div>
+                
+             <div class="col-md-12 mb-3 border-top pt-3 mt-2">
+    <label class="small text-uppercase fw-bold mb-2 text-success d-block">Configuración Avanzada del Banner Principal</label>
+    <div class="row bg-light p-3 rounded border g-3">
+        <div class="col-md-6">
+            <label class="small text-muted d-block mb-1">Seleccionar foto de fondo:</label>
+            <input type="file" name="imagen_hero" id="inputImagenHero" class="form-control mb-2">
+            {% if global_config and global_config.imagen_hero %}
+                <img src="{{ global_config.imagen_hero }}" class="img-thumbnail" style="max-height: 60px;">
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <label class="small text-muted d-block mb-1">Alineación / Enfoque Vertical: <span id="labelFoco">{{ global_config.posicion_foco_hero if global_config.posicion_foco_hero else '50%' }}</span></label>
+            <input type="range" name="posicion_foco_hero" id="rangeHero" class="form-range" min="0" max="100" value="{{ global_config.posicion_foco_hero.replace('%','') if global_config.posicion_foco_hero else '50' }}">
+        </div>
+        <div class="col-md-12 mt-2">
+            <label class="small text-uppercase fw-bold mb-2 d-block">Previsualización:</label>
+            <div id="preview-box" style="width: 100%; height: 150px; background-color: #ddd; background-size: cover; background-repeat: no-repeat; border: 1px solid #ccc; border-radius: 4px;
+                {% if global_config and global_config.imagen_hero %}
+                background-image: url('{{ global_config.imagen_hero }}');
+                background-position: center {{ global_config.posicion_foco_hero if global_config.posicion_foco_hero else '50%' }};
+                {% endif %}
+            "></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const inputHero = document.getElementById('inputImagenHero');
+    const rangeHero = document.getElementById('rangeHero');
+    const previewBox = document.getElementById('preview-box');
+    const labelFoco = document.getElementById('labelFoco');
+
+    inputHero.addEventListener('change', function() {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            previewBox.style.backgroundImage = `url('${e.target.result}')`;
+        };
+        reader.readAsDataURL(this.files[0]);
+    });
+
+    rangeHero.addEventListener('input', function() {
+        const val = this.value + '%';
+        previewBox.style.backgroundPosition = `center ${val}`;
+        labelFoco.textContent = val;
+    });
+</script>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm text-uppercase mt-2">Guardar Identidad y Configuración</button>
+        </form>
+    </div>
+
+    <div class="card p-4 mb-5 shadow-sm bg-white border-dark">
+        <h2 class="h4 text-uppercase mb-3 text-dark">Gestión de Servicios & Paquetes</h2>
+        
+        <button class="btn btn-outline-dark btn-sm mb-4" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNuevoServicio">
+            + Crear Nuevo Servicio Base
+        </button>
+        
+        <div class="collapse mb-4" id="collapseNuevoServicio">
+            <div class="p-3 border rounded bg-light">
+                <form action="{{ url_for('nuevo_servicio') }}" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="row">
+                        <div class="col-md-6 mb-3"><input type="text" name="tipo" class="form-control" placeholder="Nombre (Ej: Maquillaje Social)" required></div>
+                        <div class="col-md-6 mb-3"><input type="text" name="duracion" class="form-control" placeholder="Duración (Ej: 1h 15m)" required></div>
+                        <div class="col-md-12 mb-3"><textarea name="incluye" class="form-control" rows="3" placeholder="¿Qué incluye?" required></textarea></div>
+                        <div class="col-md-12 mb-3">
+                            <label class="small fw-bold">Imagen de Referencia Principal</label>
+                            <input type="file" name="imagen_principal" class="form-control" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-sm mt-2">Dar de Alta Servicio</button>
+                </form>
+            </div>
+        </div>
+
+        <h3 class="h6 text-uppercase border-bottom pb-2 mb-3">Catálogo Técnico Actual</h3>
+        
+        {% for s in servicios %}
+        <div class="border p-4 rounded-3 mb-4 bg-white shadow-sm">
+            <div class="row">
+                <div class="col-md-5">
+                    <h4 class="h5 text-uppercase fw-bold mb-3 text-secondary">{{ s.tipo }}</h4>
+                    <form action="{{ url_for('editar_servicio', id=s.id) }}" method="POST" enctype="multipart/form-data" class="border-end pe-3">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <div class="mb-2">
+                            <label class="small text-muted">Nombre del Servicio:</label>
+                            <input type="text" name="tipo" class="form-control form-control-sm" value="{{ s.tipo }}" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="small text-muted">Duración:</label>
+                            <input type="text" name="duracion" class="form-control form-control-sm" value="{{ s.duracion }}" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="small text-muted">Descripción Base:</label>
+                            <textarea name="incluye" class="form-control form-control-sm" rows="3" required>{{ s.incluye }}</textarea>
+                        </div>
+                       <div class="mb-2">
+    <label class="small text-muted">Posición del Foco Vertical: <span id="labelFocoS{{ s.id }}">{{ s.posicion_foco if s.posicion_foco else '50%' }}</span></label>
+    <input type="range" name="posicion_foco" id="rangeS{{ s.id }}" class="form-range" min="0" max="100" value="{{ s.posicion_foco.replace('%','') if s.posicion_foco else '50' }}"
+           oninput="moverFoco('previewS{{ s.id }}', 'labelFocoS{{ s.id }}', this.value)">
+    <div id="previewS{{ s.id }}" style="width: 100%; height: 120px; background-size: cover; background-repeat: no-repeat; border: 1px solid #ccc; border-radius: 4px; margin-top: 6px;
+        background-image: url('{{ s.imagen_principal }}');
+        background-position: center {{ s.posicion_foco if s.posicion_foco else '50%' }};">
+    </div>
+</div>
+                        <div class="mb-3">
+                            <label class="small text-muted">Cambiar Imagen de Portada:</label>
+                            <input type="file" name="imagen_principal" class="form-control form-control-sm mb-1">
+                            <img src="{{ s.imagen_principal }}" class="img-thumbnail" style="height: 50px; object-fit: cover;">
+                        </div>
+                        <button type="submit" class="btn btn-dark btn-sm text-uppercase w-100">💾 Guardar Cambios Básicos</button>
+                    </form>
+                </div>
+
+                <div class="col-md-4 border-end px-3">
+                    <h5 class="h6 text-uppercase fw-bold text-muted mb-2">Galería Interna de Trabajos</h5>
+                    <form action="{{ url_for('subir_foto_servicio', id=s.id) }}" method="POST" enctype="multipart/form-data" class="mb-3">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <div class="input-group input-group-sm">
+                            <input type="file" name="fotos_galeria" multiple class="form-control" required>
+                            <button type="submit" class="btn btn-sm btn-outline-success">Añadir</button>
+                        </div>
+                    </form>
+                    <div class="row g-1">
+                        {% for f in s.fotos %}
+                        <div class="col-3 position-relative text-center">
+                            <img src="{{ f.ruta }}" class="img-thumbnail w-100" style="height: 45px; object-fit: cover;">
+                            <a href="{{ url_for('eliminar_foto_servicio', foto_id=f.id) }}" class="btn btn-danger btn-sm p-0 position-absolute top-0 start-100 translate-middle rounded-circle" style="width:16px; height:16px; font-size:10px;" onclick="return confirm('¿Quitar foto?')">&times;</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="col-md-3 ps-3">
+                    <h5 class="h6 text-uppercase fw-bold text-muted mb-2">Paquetes Vinculados</h5>
+                    <form action="{{ url_for('nuevo_paquete') }}" method="POST" class="mb-3 p-2 bg-light rounded border">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="servicio_id" value="{{ s.id }}">
+                        <input type="text" name="nombre" class="form-control form-control-sm mb-1" placeholder="Nombre Paquete" required>
+                        <textarea name="descripcion" class="form-control form-control-sm mb-1" rows="2" placeholder="Detalles..." required></textarea>
+                        <button type="submit" class="btn btn-success btn-xs w-100" style="font-size: 11px; padding: 2px 5px;">+ Añadir Paquete</button>
+                    </form>
+
+                    <div class="list-group">
+                        {% for p in s.paquetes %}
+                        <div class="list-group-item p-2 d-flex justify-content-between align-items-start bg-light" style="font-size: 0.75rem;">
+                            <div class="text-truncate" style="max-width: 80%;">
+                                <div class="fw-bold text-uppercase">{{ p.nombre }}</div>
+                                <span class="text-muted">{{ p.descripcion }}</span>
+                            </div>
+                            <a href="{{ url_for('eliminar_paquete', id=p.id) }}" class="text-danger fw-bold text-decoration-none" onclick="return confirm('¿Eliminar paquete?')">&times;</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="text-end mt-3 border-top pt-2">
+                <a href="{{ url_for('eliminar_servicio', id=s.id) }}" class="btn btn-xs btn-outline-danger py-1 px-3" style="font-size: 12px;" onclick="return confirm('¿Seguro que deseas eliminar este servicio completo?')">🚨 Eliminar Servicio Completo</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="card p-4 mb-5 shadow-sm bg-white" style="border-left: 5px solid #b8d8e8;">
+        <h2 class="h4 text-uppercase mb-3 text-info">Gestión de Cursos</h2>
+
+        <button class="btn btn-outline-info btn-sm mb-4" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNuevoCurso">
+            + Crear Nuevo Curso
+        </button>
+
+        <div class="collapse mb-4" id="collapseNuevoCurso">
+            <div class="p-3 border rounded bg-light">
+                <form action="{{ url_for('nuevo_curso') }}" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="row">
+                        <div class="col-md-6 mb-3"><input type="text" name="nombre" class="form-control" placeholder="Nombre del Curso" required></div>
+                        <div class="col-md-6 mb-3"><input type="text" name="duracion" class="form-control" placeholder="Duración (Ej: 3 meses)" required></div>
+                        <div class="col-md-12 mb-3"><textarea name="descripcion" class="form-control" rows="3" placeholder="Descripción / Programa del curso" required></textarea></div>
+                        <div class="col-md-12 mb-3">
+                            <label class="small fw-bold">Imagen Principal</label>
+                            <input type="file" name="imagen_principal" class="form-control" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-info btn-sm mt-2 text-white">Dar de Alta Curso</button>
+                </form>
+            </div>
+        </div>
+
+        <h3 class="h6 text-uppercase border-bottom pb-2 mb-3">Cursos Actuales</h3>
+
+        {% for c in cursos %}
+        <div class="border p-4 rounded-3 mb-4 bg-white shadow-sm">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="h5 text-uppercase fw-bold mb-3 text-secondary">{{ c.nombre }}</h4>
+                    <form action="{{ url_for('editar_curso', id=c.id) }}" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <div class="mb-2">
+                            <label class="small text-muted">Nombre del Curso:</label>
+                            <input type="text" name="nombre" class="form-control form-control-sm" value="{{ c.nombre }}" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="small text-muted">Duración:</label>
+                            <input type="text" name="duracion" class="form-control form-control-sm" value="{{ c.duracion }}" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="small text-muted">Descripción / Programa:</label>
+                            <textarea name="descripcion" class="form-control form-control-sm" rows="3" required>{{ c.descripcion }}</textarea>
+                        </div>
+                        <div class="mb-2">
+    <label class="small text-muted">Posición del Foco Vertical: <span id="labelFocoC{{ c.id }}">{{ c.posicion_foco if c.posicion_foco else '50%' }}</span></label>
+    <input type="range" name="posicion_foco" id="rangeC{{ c.id }}" class="form-range" min="0" max="100" value="{{ c.posicion_foco.replace('%','') if c.posicion_foco else '50' }}"
+           oninput="moverFoco('previewC{{ c.id }}', 'labelFocoC{{ c.id }}', this.value)">
+    <div id="previewC{{ c.id }}" style="width: 100%; height: 120px; background-size: cover; background-repeat: no-repeat; border: 1px solid #ccc; border-radius: 4px; margin-top: 6px;
+        background-image: url('{{ c.imagen_principal }}');
+        background-position: center {{ c.posicion_foco if c.posicion_foco else '50%' }};">
+    </div>
+</div>
+                        <div class="mb-3">
+                            <label class="small text-muted">Cambiar Imagen Principal:</label>
+                            <input type="file" name="imagen_principal" class="form-control form-control-sm mb-1">
+                            <img src="{{ c.imagen_principal }}" class="img-thumbnail" style="height: 50px; object-fit: cover;">
+                        </div>
+                        <button type="submit" class="btn btn-info btn-sm text-uppercase text-white w-100">💾 Guardar Cambios</button>
+                    </form>
+                </div>
+
+                <div class="col-md-6 ps-3">
+                    <h5 class="h6 text-uppercase fw-bold text-muted mb-2">Galería de Resultados / Prácticas</h5>
+                    <form action="{{ url_for('subir_foto_curso', id=c.id) }}" method="POST" enctype="multipart/form-data" class="mb-3">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <div class="input-group input-group-sm">
+                            <input type="file" name="fotos_galeria" multiple class="form-control" required>
+                            <button type="submit" class="btn btn-sm btn-outline-success">Añadir</button>
+                        </div>
+                    </form>
+                    <div class="row g-1">
+                        {% for f in c.fotos %}
+                        <div class="col-3 position-relative text-center">
+                            <img src="{{ f.ruta }}" class="img-thumbnail w-100" style="height: 45px; object-fit: cover;">
+                            <a href="{{ url_for('eliminar_foto_curso', foto_id=f.id) }}" class="btn btn-danger btn-sm p-0 position-absolute top-0 start-100 translate-middle rounded-circle" style="width:16px; height:16px; font-size:10px;" onclick="return confirm('¿Quitar foto?')">&times;</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="text-end mt-3 border-top pt-2">
+                <a href="{{ url_for('eliminar_curso', id=c.id) }}" class="btn btn-xs btn-outline-danger py-1 px-3" style="font-size: 12px;" onclick="return confirm('¿Seguro que deseas eliminar este curso?')">🚨 Eliminar Curso</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="card p-4 mb-5 shadow-sm bg-white" style="border-left: 5px solid #eac8be;">
+        <h2 class="h4 text-uppercase mb-3">Experiencias / Testimonios</h2>
+        <form action="{{ url_for('nueva_experiencia') }}" method="POST" enctype="multipart/form-data" class="mb-4">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="row">
+                <div class="col-md-6 mb-3"><input type="text" name="nombre" class="form-control" placeholder="Nombre del Cliente" required></div>
+                <div class="col-md-6 mb-3"><input type="file" name="foto_perfil" class="form-control" required></div>
+                <div class="col-md-12 mb-3"><textarea name="testimonio" class="form-control" rows="2" placeholder="Testimonio..." required></textarea></div>
+            </div>
+            <button type="submit" class="btn btn-tiara btn-sm">Guardar Testimonio</button>
+        </form>
+        <table class="table align-middle">
+            <tbody>
+                {% for exp in experiencias %}
+                <tr>
+                    <td><img src="{{ exp.foto_perfil }}" class="rounded-circle" style="width:35px; height:35px; object-fit:cover;"></td>
+                    <td><strong>{{ exp.nombre }}</strong></td>
+                    <td><a href="{{ url_for('eliminar_experiencia', id=exp.id) }}" class="btn btn-sm btn-outline-danger">Eliminar</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card p-4 mb-5 shadow-sm bg-white border-secondary">
+        <h2 class="h4 text-uppercase mb-3">Preguntas Frecuentes (FAQ)</h2>
+        <form action="{{ url_for('nueva_faq') }}" method="POST" class="mb-4">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="mb-3"><input type="text" name="pregunta" class="form-control" placeholder="Pregunta" required></div>
+            <div class="mb-3"><textarea name="respuesta" class="form-control" rows="2" placeholder="Respuesta..." required></textarea></div>
+            <button type="submit" class="btn btn-tiara btn-sm">Añadir Pregunta</button>
+        </form>
+        <table class="table align-middle">
+            <tbody>
+                {% for faq in faqs %}
+                <tr>
+                    <td><strong>{{ faq.pregunta }}</strong></td>
+                    <td><a href="{{ url_for('eliminar_faq', id=faq.id) }}" class="btn btn-sm btn-outline-danger">Eliminar</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card p-4 shadow-sm bg-white">
+        <h2 class="h4 text-uppercase mb-3">Portfolio General</h2>
+        <form action="{{ url_for('subir_galeria_general') }}" method="POST" enctype="multipart/form-data" class="mb-4">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="mb-3"><input type="file" name="fotos_generales" multiple class="form-control" required></div>
+            <button type="submit" class="btn btn-tiara btn-sm">Subir Imágenes</button>
+        </form>
+        <div class="row g-2">
+            {% for foto in galeria_general %}
+            <div class="col-2 text-center position-relative">
+                <img src="{{ foto.ruta }}" class="img-thumbnail" style="height: 50px; width: 100%; object-fit: cover;">
+                <a href="{{ url_for('eliminar_foto_general', id=foto.id) }}" class="btn btn-danger btn-xs p-0 position-absolute top-0 start-100 translate-middle rounded-circle" style="width:18px; height:18px; font-size:10px;">&times;</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+<script>
+function moverFoco(previewId, labelId, valor) {
+    const pos = valor + '%';
+    document.getElementById(previewId).style.backgroundPosition = 'center ' + pos;
+    document.getElementById(labelId).textContent = pos;
+}
+</script>
+
+{% endblock %}

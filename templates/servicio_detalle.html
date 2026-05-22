@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-2 mb-5 crecer-letra">
+
+    <div class="w-100 d-flex justify-content-center mb-0">
+        <img src="{{ servicio.imagen_principal }}" 
+             class="img-detalle-servicio shadow-sm" 
+             alt="{{ servicio.tipo }}">
+    </div>
+
+    <div class="px-3 pt-3 pb-2">
+        <h1 class="text-uppercase font-serif mb-1" style="font-size: 1.85rem; letter-spacing: 1px;">{{ servicio.tipo }}</h1>
+        <p class="text-muted mb-2" style="font-size: 0.95rem; letter-spacing: 1px;">⏱ {{ servicio.duracion }}</p>
+        <div style="width: 40px; height: 2px; background-color: #eac8be; margin-bottom: 12px;"></div>
+        <p style="white-space: pre-line; line-height: 1.7; font-size: 1.05rem;" class="text-muted mb-0">{{ servicio.incluye }}</p>
+    </div>
+
+    </div>
+
+<style>
+    /* 📱 MOBILE: Imagen fluida */
+    .img-detalle-servicio {
+        width: 100%;
+        height: auto;
+        max-height: 400px;
+        object-fit: contain;
+    }
+
+    /* 💻 DESKTOP: Imagen completa, centrada, sin fondo oscuro ni recortes */
+    @media (min-width: 768px) {
+        .img-detalle-servicio {
+            width: auto;
+            max-width: 100%;
+            height: auto;
+            max-height: 70vh;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+        }
+    }
+
+    /* Escalado de fuentes (+25%) */
+    .crecer-letra { font-size: 1.25rem; }
+    .crecer-letra .text-muted, .crecer-letra small, .crecer-letra .small { font-size: 0.9rem !important; }
+</style>
+
+{% endblock %}

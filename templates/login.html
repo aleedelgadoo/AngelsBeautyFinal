@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-5 py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-4 card p-4 shadow-sm bg-white border">
+            <h2 class="text-center text-uppercase mb-4 fw-light font-serif">Admin Login</h2>
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label small text-uppercase text-muted">Usuario</label>
+                    <input type="text" name="username" class="form-control" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label small text-uppercase text-muted">Contraseña</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-tiara w-100">Ingresar</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

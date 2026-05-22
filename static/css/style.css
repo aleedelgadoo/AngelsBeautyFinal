@@ -1,0 +1,72 @@
+/* ==========================================
+   CONFIGURACIÓN BASE (MÓVIL)
+   ========================================== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap');
+
+:root {
+    --bg-color: #fcf4f0;
+    --accent-pink: #eac8be;
+    --dark-text: #2c2523;
+    --white: #ffffff;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+
+body {
+    background-color: var(--bg-color);
+    color: var(--dark-text);
+    font-family: 'Montserrat', sans-serif;
+}
+
+h1, h2, h3, .navbar-brand { font-family: 'Playfair Display', serif; letter-spacing: 1px; }
+
+.navbar { background-color: var(--bg-color) !important; border-bottom: 1px solid rgba(0,0,0,0.05); }
+
+/* Banner Inicio Base */
+.hero-inicio { min-height: 200px; }
+.hero-titulo { font-size: 1.2rem; letter-spacing: 1px; }
+.hero-subtitulo { font-size: 0.75rem; }
+
+/* Sobre Mí: Medidas Móvil (Reducción del 35% exacta y simetría cuadrada) */
+.about-img-wrapper { width: 53px !important; height: 53px !important; position: relative; margin: 0 auto; }
+.about-bg-square { top: 10px !important; left: 10px !important; width: 72px !important; height: 72px !important; position: absolute; background-color: var(--accent-pink); z-index: 1; }
+.about-photo-square { width: 72px !important; height: 72px !important; position: absolute; top: 0; left: 0; z-index: 2; overflow: hidden; }
+.about-titulo { font-size: 0.95rem; }
+.about-texto { font-size: 0.58rem; line-height: 1.6; }
+
+/* Carruseles y otros */
+.slider-container { position: relative; width: 100%; }
+.slider-wrapper { display: flex; overflow-x: auto; scroll-behavior: smooth; gap: 16px; padding: 15px 5px; width: 100%; scrollbar-width: none; }
+.slider-wrapper::-webkit-scrollbar { display: none; }
+.slider-item { flex: 0 0 auto; width: 290px; }
+
+/* Componentes */
+.btn-tiara {
+    background-color: var(--white); color: var(--dark-text); border: 1px solid var(--dark-text);
+    border-radius: 20px; padding: 8px 24px; font-size: 0.85rem; letter-spacing: 1px;
+    text-transform: uppercase; transition: all 0.3s ease; text-decoration: none; display: inline-block;
+}
+.btn-tiara:hover { background-color: var(--dark-text); color: var(--white); }
+
+/* ==========================================
+   AJUSTES ESCRITORIO (min-width: 992px)
+   ========================================== */
+@media (min-width: 992px) {
+    main, .container { max-width: 1100px !important; margin: 0 auto !important; }
+
+    /* ... otros estilos que ya tienes (Banner, About Me) ... */
+
+    /* About Me: Texto Grande */
+    .about-titulo { font-size: 2.5rem !important; }
+    .about-texto { font-size: 1.1rem !important; line-height: 1.8 !important; }
+    
+    /* Layout */
+    .about-row { align-items: center !important; }
+
+    /* 🟢 AGREGA ESTO AQUÍ PARA AGRANDAR LOS TÍTULOS DE SERVICIOS UN 35% */
+    #servicios .card h3 {
+        font-size: 0.95rem !important; /* Pasa de 0.7rem a 0.95rem (~35% más grande) */
+        letter-spacing: 1.5px !important; /* Le da un toque más elegante y espaciado en PC */
+        padding: 4px 0 !important; /* Añade un poco de aire arriba y abajo del texto */
+    }
+}

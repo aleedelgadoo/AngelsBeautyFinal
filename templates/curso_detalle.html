@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-2 mb-5 crecer-letra">
+
+    <div class="w-100 d-flex justify-content-center bg-web-dark mb-0">
+        <img src="{{ curso.imagen_principal }}" 
+             class="img-detalle-curso shadow-sm" 
+             alt="{{ curso.nombre }}">
+    </div>
+
+    <div class="px-3 pt-3 pb-2">
+        <h1 class="text-uppercase font-serif mb-1" style="font-size: 1.85rem; letter-spacing: 1px;">{{ curso.nombre }}</h1>
+        <p class="text-muted mb-2" style="font-size: 0.95rem; letter-spacing: 1px;">⏱ {{ curso.duracion }}</p>
+        <div style="width: 40px; height: 2px; background-color: #b8d8e8; margin-bottom: 12px;"></div>
+        <p style="white-space: pre-line; line-height: 1.7; font-size: 1.05rem;" class="text-muted mb-0">{{ curso.descripcion }}</p>
+    </div>
+
+    {% if curso.fotos %}
+    <div class="px-3 pt-4 mt-3" style="border-top: 1px solid #e8f0f4;">
+        <h2 class="text-uppercase text-center font-serif mb-3" style="font-size: 1.15rem; letter-spacing: 2px; color: #2c2523;">Resultados de Alumnas</h2>
+        <div class="row g-2">
+            {% for foto in curso.fotos %}
+            <div class="col-6">
+                <img src="{{ foto.ruta }}" 
+                     class="w-100 shadow-sm"
+                     style="aspect-ratio: 1/1; object-fit: cover;">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+<style>
+    /* 📱 MOBILE: Mantenemos el comportamiento fluido */
+    .img-detalle-curso {
+        width: 100%;
+        height: auto;
+        max-height: 400px;
+        object-fit: contain;
+    }
+    
+    .bg-web-dark {
+        background-color: #faf6f5; /* Mismo color de fondo que el resto de la web */
+    }
+
+    /* 💻 DESKTOP: Ajuste para que se vea completa pero sin espacios negros forzados */
+    @media (min-width: 768px) {
+        .bg-web-dark {
+            background-color: transparent; /* Quitamos el fondo oscuro */
+            padding: 0;
+        }
+        
+        .img-detalle-curso {
+            width: auto;             /* La imagen toma su ancho natural */
+            max-width: 100%;         /* Sin pasarse de la pantalla */
+            height: auto;            /* Auto para que no se deforme ni cree espacios extra */
+            max-height: 70vh;        /* Límite de altura para que no sea infinita */
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+        }
+    }
+
+    /* Escalado de fuentes */
+    .crecer-letra { font-size: 1.25rem; }
+    .crecer-letra .text-muted, .crecer-letra small { font-size: 0.9rem !important; }
+</style>
+{% endblock %}

@@ -1,0 +1,337 @@
+{% extends 'base.html' %}
+{% block content %}
+<section id="inicio" class="d-flex flex-column align-items-center justify-content-center text-center custom-hero-main" 
+         style="min-height: 250px; 
+                background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), 
+                            url('{{ global_config.imagen_hero if (global_config and global_config.imagen_hero) else '' }}'); 
+                background-size: cover; 
+                background-position: center {{ global_config.posicion_foco_hero if (global_config and global_config.posicion_foco_hero) else '50%' }};
+                background-repeat: no-repeat;
+                width: 100%;">
+    
+   <style>
+        @media (min-width: 992px) {
+            .custom-hero-main {
+                min-height: 70vh !important;
+                padding: 60px 0;
+            }
+            .custom-hero-main h1 {
+                font-size: 3.8rem !important;
+                letter-spacing: 3px !important;
+                line-height: 1.3 !important;
+            }
+            .custom-hero-main p {
+                font-size: 1.3rem !important;
+                margin-bottom: 2rem !important;
+            }
+            .custom-hero-main .btn {
+                font-size: 1rem !important;
+                padding: 12px 35px !important;
+            }
+
+            /* Forzar el aumento del 35% en las letras de Servicios y Cursos para PC */
+            #servicios .card h3, #cursos .card h3 {
+                font-size: 0.95rem !important;
+                letter-spacing: 1.5px !important;
+                padding: 5px 0 !important;
+            }
+
+            /* 🟢 AGREGADO: Agrandar las letras de los testimonios un 35% SOLO EN PC */
+            #testimonios p {
+                font-size: 1.15rem !important; /* Pasa el texto del testimonio a un tamaño más legible en monitores */
+                line-height: 1.7 !important;   /* Le da mejor espaciado vertical para que no se canse la vista */
+            }
+            #testimonios h5, #testimonios .fw-bold {
+                font-size: 1.25rem !important; /* Agranda también los nombres de las personas que dejaron la reseña */
+            }
+        }
+    </style>
+    <div class="px-3">
+        <h1 class="font-serif mb-3 text-white" style="font-size: 1.2rem; letter-spacing: 0px;">
+            UNLEASH YOUR BEAUTY<br>WITH CONFIDENCE
+        </h1>
+        <p class="mb-4" style="font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 300; font-style: italic; color: #ffffff;">
+            Professional Makeup Services Tailored Just For You
+        </p>
+        <a href="{{ global_config.link_turno if (global_config and global_config.link_turno) else '#' }}" 
+           target="_blank" class="btn btn-light" style="font-size: 0.7rem; padding: 5px 14px; border-radius: 50px; text-transform: uppercase; letter-spacing: 1px;">Book Your Appointment</a>
+    </div>
+</section>
+<section id="sobre-mi" class="pt-5 pb-5" style="background-color: #ffffff; overflow: hidden;">
+    <div class="container">
+        <div class="d-flex flex-row flex-nowrap align-items-center justify-content-center mx-auto" style="max-width: 1100px; gap: 30px;">
+            
+            <div style="flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+                <div class="position-relative custom-about-container" style="--size-box: 95px; width: var(--size-box); height: var(--size-box);">
+                    <style>
+                        /* Estilos directos e inmunes a archivos externos para pantallas de escritorio */
+                        @media (min-width: 992px) {
+                            .custom-about-container { 
+                                --size-box: 312px !important; /* Agrandamos la caja considerablemente en PC */
+                            }
+                            .custom-about-box {
+                                margin-top: 10px;
+                                margin-bottom: 10px;
+                            }
+                        }
+                    </style>
+                    <div class="custom-about-box" style="width: var(--size-box); height: var(--size-box); position: relative;">
+                        <div style="position: absolute; background-color: #eac8be; z-index: 1;
+                                    top: calc(var(--size-box) * 0.1); left: calc(var(--size-box) * 0.1); 
+                                    width: calc(var(--size-box) * 0.9); height: calc(var(--size-box) * 0.9);">
+                        </div>
+                        <div style="position: absolute; top: 0; left: 0; z-index: 2; overflow: hidden;
+                                    width: calc(var(--size-box) * 0.9); height: calc(var(--size-box) * 0.9);">
+                            <img src="{{ global_config.imagen_sobre_mi }}" 
+                                 alt="Sobre Mí" 
+                                 class="shadow-sm" 
+                                 style="width: 100%; height: 100%; object-fit: cover; border: 2px solid white; display: block;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-start d-flex flex-column justify-content-center" style="flex-grow: 1; min-width: 0;">
+                <style>
+                    /* Tamaños y espaciados dinámicos para el texto */
+                    .txt-descripcion-about {
+                        font-size: 0.65rem !important;
+                        line-height: 1.5 !important;
+                    }
+                    .about-titulo-custom {
+                        letter-spacing: 0.7px; 
+                        font-size: 1.2rem;
+                    }
+                    @media (min-width: 992px) {
+                        .txt-descripcion-about {
+                            font-size: 1.05rem !important;
+                            line-height: 1.8 !important;
+                        }
+                        .about-titulo-custom {
+                            font-size: 2.5rem !important;
+                            margin-bottom: 15px !important;
+                        }
+                    }
+                </style>
+                <h2 class="text-uppercase mb-1 about-titulo-custom">About Me</h2>
+                <p class="fw-light mb-0 txt-descripcion-about text-muted">Maquillista apasionada por resaltar la belleza y esencia única de cada persona. Me especializo en crear looks personalizados para eventos, producciones y ocasiones especiales, combinando técnica, creatividad y atención al detalle. Mi objetivo es que cada cliente se sienta segura, cómoda y auténtica, brindando una experiencia profesional y cálida.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+<div style="background-color: #1a1a1a; color: #ffffff; text-align: center; padding: 8px; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">    Booking Available for 2026
+</div>
+<section id="servicios" class="container pt-3 pb-0">
+    <h2 class="text-center mb-2" style="letter-spacing: 1px;">{{ global_config.sec_servicios }}</h2>
+    
+    <div id="carouselServicios" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            {% for grupo in servicios | batch(3) %}
+            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                <div class="row justify-content-center g-3">
+                    {% for serv in grupo %}
+                    <div class="col-4"> <a href="{{ url_for('servicio_detalle', id=serv.id) }}" class="text-decoration-none">
+                            <div class="card border-0 shadow-sm p-1">
+                                <img src="{{ serv.imagen_principal }}" 
+                                     class="img-fluid"
+                                     style="width: 100%; aspect-ratio: 1 / 1; object-fit: cover;">
+                                <div class="mt-1 text-center text-dark" style="background-color: #eac8be; padding: 5px;">
+                                    <h3 class="h6 text-uppercase m-0 fw-bold" style="font-size: 0.7rem;">{{ serv.tipo }}</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselServicios" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon bg-dark rounded-circle" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselServicios" data-bs-slide="next">
+            <span class="carousel-control-next-icon bg-dark rounded-circle" aria-hidden="true"></span>
+        </button>
+    </div>
+</section>
+
+<section id="cursos" class="container pt-3 pb-0">
+    <h2 class="text-center mb-2" style="letter-spacing: 1px;">{{ global_config.sec_cursos }}</h2>
+
+    <div id="carouselCursos" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            {% for grupo in cursos | batch(3) %}
+            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                <div class="row justify-content-center g-3">
+                    {% for curso in grupo %}
+                    <div class="col-4">
+                        <a href="{{ url_for('curso_detalle', id=curso.id) }}" class="text-decoration-none">
+                            <div class="card border-0 shadow-sm p-1">
+                                <img src="{{ curso.imagen_principal }}"
+                                     style="width: 100%; aspect-ratio: 1 / 1; object-fit: cover;">
+                                <div class="mt-1 text-center text-dark" style="background-color: #b8d8e8; padding: 5px;">
+                                    <h3 class="h6 text-uppercase m-0 fw-bold" style="font-size: 0.7rem;">{{ curso.nombre }}</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselCursos" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon bg-dark rounded-circle" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselCursos" data-bs-slide="next">
+            <span class="carousel-control-next-icon bg-dark rounded-circle" aria-hidden="true"></span>
+        </button>
+    </div>
+</section>
+<section id="experiencias" class="container my-3 py-3 border-top">
+    <style>
+        /* --- AJUSTES PARA MOBILE (Aumentado un 35%) --- */
+        .exp-testimonio-custom {
+            font-size: 0.92rem !important; /* Subió un 35% de su tamaño base (era 0.68rem) */
+            line-height: 1.6 !important;
+            color: #2c2523;
+        }
+        .exp-nombre-custom {
+            font-size: 0.74rem !important; /* Subió un 35% de su tamaño base (era 0.55rem) */
+            letter-spacing: 1px;
+        }
+        .exp-avatar-custom {
+            width: 68px !important;  /* Foto un poco más grande en celular para acompañar la letra */
+            height: 68px !important;
+        }
+
+        /* --- AJUSTES PARA DESKTOP (Monitores grandes) --- */
+        @media (min-width: 992px) {
+            .exp-testimonio-custom {
+                font-size: 1.25rem !important; /* Mantiene el tamaño grande ideal para web */
+                line-height: 1.8 !important;   
+                max-width: 850px;              /* Centra el bloque de texto en pantallas anchas */
+                margin: 0 auto;
+            }
+            .exp-nombre-custom {
+                font-size: 1.0rem !important;  
+                letter-spacing: 1.5px !important;
+                margin-top: 8px;
+            }
+            .exp-avatar-custom {
+                width: 90px !important;
+                height: 90px !important;
+            }
+        }
+    </style>
+
+    <h2 class="text-center text-uppercase mb-3" style="letter-spacing: 1px;">{{ global_config.sec_testimonios }}</h2>
+
+    <div id="carouselTestimonios" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            {% if experiencias %}
+                {% for exp in experiencias %}
+                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                    <div class="d-flex align-items-center justify-content-center gap-3 px-4 py-2 mx-auto" style="max-width: 900px;">
+                        
+                        <div style="flex-shrink: 0;">
+                            <img src="{{ exp.foto_perfil }}"
+                                 alt="{{ exp.nombre }}"
+                                 class="shadow-sm exp-avatar-custom"
+                                 style="object-fit: cover; border: 4px solid #fff; border-radius: 50%;"> 
+                        </div>
+                        
+                        <div class="text-start">
+                            <p class="font-serif fst-italic mb-1 exp-testimonio-custom">
+                                "{{ exp.testimonio }}"
+                            </p>
+                            <p class="small text-uppercase text-muted mb-0 exp-nombre-custom">
+                                — {{ exp.nombre }}
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="carousel-item active">
+                    <p class="text-center text-muted fst-italic small">No hay testimonios cargados por el momento.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselTestimonios" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon bg-dark rounded-circle" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselTestimonios" data-bs-slide="next">
+            <span class="carousel-control-next-icon bg-dark rounded-circle" aria-hidden="true"></span>
+        </button>
+    </div>
+</section>
+<section id="preguntas-frecuentes" class="container mt-2 mb-0 py-1 border-top">
+    <style>
+        /* --- AJUSTES PARA MOBILE (Aumentado un 35%) --- */
+        .faq-btn-custom {
+            font-size: 1.48rem !important; /* Subió un 35% (era 1.1rem) */
+            line-height: 1.4 !important;
+        }
+        .faq-body-custom {
+            font-size: 1.28rem !important; /* Subió un 35% (era 0.95rem) */
+            line-height: 1.7 !important;
+        }
+
+        /* --- AJUSTES PARA DESKTOP (Monitores grandes) --- */
+        @media (min-width: 992px) {
+            .faq-btn-custom {
+                font-size: 2.0rem !important; /* Se escala proporcionalmente más grande en web */
+                line-height: 1.5 !important;
+            }
+            .faq-body-custom {
+                font-size: 1.72rem !important; /* Se escala proporcionalmente más grande en web */
+                line-height: 1.8 !important;
+            }
+        }
+    </style>
+
+    <h2 class="text-center mb-2" style="letter-spacing: 1px;">{{ global_config.sec_faq }}</h2> 
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            {% if faqs %}
+                <div class="accordion accordion-flush" id="accordionFaq">
+                    {% for faq in faqs %}
+                    <div class="accordion-item mb-0 border-0 border-bottom">
+                        <h2 class="accordion-header" id="heading-{{ faq.id }}">
+                            <button class="accordion-button collapsed font-serif bg-transparent px-0 faq-btn-custom" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ faq.id }}" aria-expanded="false" style="color: #2c2523; outline: none; box-shadow: none;">
+                                {{ faq.pregunta }}
+                            </button>
+                        </h2>
+                        <div id="collapse-{{ faq.id }}" class="accordion-collapse collapse" data-bs-parent="#accordionFaq">
+                            <div class="accordion-body px-0 pt-0 text-muted fw-light faq-body-custom" style="white-space: pre-line;">                                
+                                {{ faq.respuesta }}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-center text-muted small fst-italic">No hay preguntas cargadas por el momento.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+<script>
+function scrollSlider(idSlider, direccion) {
+    const slider = document.getElementById(idSlider);
+    if(slider) {
+        const item = slider.querySelector('.slider-item');
+        if(item) {
+            const itemWidth = item.clientWidth + 24;
+            slider.scrollBy({ left: itemWidth * direccion * 2, behavior: 'smooth' });
+        }
+    }
+}
+</script>
+{% endblock %}
