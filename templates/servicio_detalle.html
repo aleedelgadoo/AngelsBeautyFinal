@@ -16,6 +16,23 @@
         <p style="white-space: pre-line; line-height: 1.7; font-size: 1.05rem;" class="text-muted mb-0">{{ servicio.incluye }}</p>
     </div>
 
+    {% if servicio.fotos %}
+<div class="px-3 pb-4">
+    <div style="width: 40px; height: 2px; background-color: #eac8be; margin-bottom: 16px;"></div>
+    <h2 class="text-uppercase font-serif mb-3" style="font-size: 1.2rem; letter-spacing: 1px;">Portfolio</h2>
+    <div class="row g-2">
+        {% for foto in servicio.fotos %}
+        <div class="col-6 col-md-4">
+            <img src="{{ foto.ruta }}" 
+                 class="img-fluid rounded shadow-sm w-100" 
+                 style="height: 220px; object-fit: cover;"
+                 alt="Trabajo de {{ servicio.tipo }}">
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
     </div>
 
 <style>
