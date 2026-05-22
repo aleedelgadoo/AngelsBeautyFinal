@@ -322,6 +322,22 @@
         </div>
     </div>
 </section>
+
+<section id="portfolio" class="container mt-5 py-3">
+    <h2 class="text-center mb-4">Portfolio</h2>
+    <div class="row g-2">
+        {% if galeria_general %}
+            {% for foto in galeria_general %}
+            <div class="col-6 col-md-3">
+                <img src="{{ foto.ruta }}" class="img-fluid shadow-sm" style="width: 100%; aspect-ratio: 1 / 1; object-fit: cover;">
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center text-muted">No hay fotos en el portfolio general.</p>
+        {% endif %}
+    </div>
+</section>
+
 <script>
 function scrollSlider(idSlider, direccion) {
     const slider = document.getElementById(idSlider);
