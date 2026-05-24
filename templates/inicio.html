@@ -113,8 +113,11 @@
                         }
                     }
                 </style>
-                <h2 class="text-uppercase mb-1 about-titulo-custom">About Me</h2>
-                <p class="fw-light mb-0 txt-descripcion-about text-muted">Maquillista apasionada por resaltar la belleza y esencia única de cada persona. Me especializo en crear looks personalizados para eventos, producciones y ocasiones especiales, combinando técnica, creatividad y atención al detalle. Mi objetivo es que cada cliente se sienta segura, cómoda y auténtica, brindando una experiencia profesional y cálida.</p>
+                <h2 class="text-uppercase mb-1 about-titulo-custom">¿Quién está detrás de Angels Beauty?</h2>
+                <p class="fw-light mb-0 txt-descripcion-about text-muted">Hola! Soy Angie, maquilladora profesional de Córdoba Capital ✨
+Hace más de siete años me dedico al mundo del maquillaje, capacitándome constantemente en maquillaje social, novias y perfeccionamientos profesionales.
+
+Mi objetivo es brindarte una experiencia personalizada, cuidando cada detalle para que te sientas cómoda, segura y radiante en tus momentos más especiales 🤍</p>
             </div>
 
         </div>
@@ -309,8 +312,7 @@
                             </button>
                         </h2>
                         <div id="collapse-{{ faq.id }}" class="accordion-collapse collapse" data-bs-parent="#accordionFaq">
-                            <div class="accordion-body px-0 pt-0 text-muted fw-light faq-body-custom" style="white-space: pre-line;">                                
-                                {{ faq.respuesta }}
+<div class="accordion-body px-0 pt-1 pb-2 text-muted fw-light faq-body-custom" style="white-space: pre-line; margin-top: -10px;">                                {{ faq.respuesta }}
                             </div>
                         </div>
                     </div>
@@ -322,14 +324,18 @@
         </div>
     </div>
 </section>
-
 <section id="portfolio" class="container mt-5 py-3">
-    <h2 class="text-center mb-4">Portfolio</h2>
+    <div style="width: 60px; height: 2px; background-color: #eac8be; margin: 0 auto 12px;"></div>
+    <h2 class="text-center text-uppercase mb-4" style="font-size: 1.2rem; letter-spacing: 1px;">Portfolio</h2>
     <div class="row g-2">
         {% if galeria_general %}
             {% for foto in galeria_general %}
-            <div class="col-6 col-md-3">
-                <img src="{{ foto.ruta }}" class="img-fluid shadow-sm" style="width: 100%; aspect-ratio: 1 / 1; object-fit: cover;">
+            <div class="col-6 col-md-4">
+                <img src="{{ foto.ruta }}" 
+                     class="img-fluid rounded shadow-sm w-100" 
+                     style="aspect-ratio: 3/4; object-fit: cover; object-position: {{ foto.posicion_foco if foto.posicion_foco else '50% 50%' }}; transition: transform 0.2s ease;"
+                     onmouseover="this.style.transform='scale(1.02)'"
+                     onmouseout="this.style.transform='scale(1)'">
             </div>
             {% endfor %}
         {% else %}
@@ -337,7 +343,6 @@
         {% endif %}
     </div>
 </section>
-
 <script>
 function scrollSlider(idSlider, direccion) {
     const slider = document.getElementById(idSlider);
