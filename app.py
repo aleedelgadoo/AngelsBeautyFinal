@@ -550,14 +550,6 @@ def ajustar_foco_foto_general(foto_id):
     db.session.commit()
     return ('', 204)
 
-@app.route('/admin/migrar-foco-general')
-@login_required
-def migrar_foco_general():
-    with db.engine.connect() as conn:
-        conn.execute(db.text("ALTER TABLE foto_general ADD COLUMN IF NOT EXISTS posicion_foco VARCHAR(20) DEFAULT '50% 50%'"))
-        conn.commit()
-    return 'Migración OK'
- 
 # ==========================================
 # INICIO
 # ==========================================
@@ -566,24 +558,24 @@ def migrar_foco_general():
 
 ##Acivar ESTO AL HACER EL DEPLOY 
 
-##with app.app_context():
-    ##db.create_all()
+with app.app_context():
+    db.create_all()
 
-if __name__ == '__main__':
-       with app.app_context():
-            db.create_all()
+##if __name__ == '__main__':
+##       with app.app_context():
+##            db.create_all()
             
             # Leemos del archivo .env. 
             # Si no pusiste nada en el .env, estas variables serán None
-            user = os.environ.get('ADMIN_USER')
-            pwd = os.environ.get('ADMIN_PASSWORD')
+##            user = os.environ.get('ADMIN_USER')
+##            pwd = os.environ.get('ADMIN_PASSWORD')
       #      
-            if user and pwd:
-                if not Admin.query.filter_by(username=user).first():
-                    hashed_pw = generate_password_hash(pwd, method='pbkdf2:sha256')
-                    db.session.add(Admin(username=user, password=hashed_pw))
-                    db.session.commit()
-                    print(f"✅ Usuario '{user}' creado correctamente.")
-            else:
-                print("⚠️ ERROR: No configuraste ADMIN_USER o ADMIN_PASSWORD en el archivo .env")
-            app.run(debug=False, use_reloader=False)
+##            if user and pwd:
+##                if not Admin.query.filter_by(username=user).first():
+##                    hashed_pw = generate_password_hash(pwd, method='pbkdf2:sha256')
+##                    db.session.add(Admin(username=user, password=hashed_pw))
+##                    db.session.commit()
+##                    print(f"✅ Usuario '{user}' creado correctamente.")
+##            else:
+##                print("⚠️ ERROR: No configuraste ADMIN_USER o ADMIN_PASSWORD en el archivo .env")
+##            app.run(debug=False, use_reloader=False)
