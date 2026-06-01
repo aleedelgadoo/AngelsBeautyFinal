@@ -1,7 +1,7 @@
 import os
 import uuid
 import mimetypes
-from flask import Flask, render_template, redirect, url_for, flash, request
+from flask import Flask, config, render_template, redirect, url_for, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -118,6 +118,9 @@ class ConfiguracionGlobal(db.Model):
     link_whatsapp  = db.Column(db.String(500), nullable=True, default="")
     link_instagram = db.Column(db.String(500), nullable=True, default="")
     link_tiktok    = db.Column(db.String(500), nullable=True, default="")
+    hero_titulo    = db.Column(db.String(200), nullable=True, default="UNLEASH YOUR BEAUTY WITH CONFIDENCE")
+    hero_subtitulo = db.Column(db.String(200), nullable=True, default="Professional Makeup Services Tailored Just For You")
+    hero_boton     = db.Column(db.String(100), nullable=True, default="Book Your Appointment")
  
 class Faq(db.Model):
     id        = db.Column(db.Integer, primary_key=True)
@@ -277,6 +280,9 @@ def actualizar_configuracion_global():
     config.link_whatsapp   = request.form.get('link_whatsapp',  '')
     config.link_instagram  = request.form.get('link_instagram', '')
     config.link_tiktok     = request.form.get('link_tiktok',    '')
+    config.hero_titulo   = request.form.get('hero_titulo', 'UNLEASH YOUR BEAUTY WITH CONFIDENCE')
+    config.hero_subtitulo = request.form.get('hero_subtitulo', 'Professional Makeup Services Tailored Just For You')
+    config.hero_boton    = request.form.get('hero_boton', 'Book Your Appointment')
  
     if request.form.get('posicion_foco_hero'):
         config.posicion_foco_hero = request.form.get('posicion_foco_hero') + '%'
@@ -561,21 +567,21 @@ def ajustar_foco_foto_general(foto_id):
 with app.app_context():
     db.create_all()
 
-##if __name__ == '__main__':
-##       with app.app_context():
-##            db.create_all()
+if __name__ == '__main__':
+       with app.app_context():
+            db.create_all()
             
             # Leemos del archivo .env. 
             # Si no pusiste nada en el .env, estas variables serán None
-##            user = os.environ.get('ADMIN_USER')
-##            pwd = os.environ.get('ADMIN_PASSWORD')
+            user = os.environ.get('ADMIN_USER')
+            pwd = os.environ.get('ADMIN_PASSWORD')
       #     
-##            if user and pwd:
-##                if not Admin.query.filter_by(username=user).first():
-##                    hashed_pw = generate_password_hash(pwd, method='pbkdf2:sha256')
-##                    db.session.add(Admin(username=user, password=hashed_pw))
-##                    db.session.commit()
-##                    print(f"✅ Usuario '{user}' creado correctamente.")
-##            else:
-##                print("⚠️ ERROR: No configuraste ADMIN_USER o ADMIN_PASSWORD en el archivo .env")
-##app.run(debug=True)
+            if user and pwd:
+                if not Admin.query.filter_by(username=user).first():
+                    hashed_pw = generate_password_hash(pwd, method='pbkdf2:sha256')
+                    db.session.add(Admin(username=user, password=hashed_pw))
+                    db.session.commit()
+                    print(f"✅ Usuario '{user}' creado correctamente.")
+            else:
+                print("⚠️ ERROR: No configuraste ADMIN_USER o ADMIN_PASSWORD en el archivo .env")
+app.run(debug=True)
